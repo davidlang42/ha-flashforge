@@ -81,13 +81,13 @@ class FlashforgePrinter(Entity):
         else:
             return UNAVAILABLE
 
-    @property
-    def available(self):
-        """Return the availability of the sensor."""
-        if 'Status' in self._data:
-            return self._data['Status'] == UNAVAILABLE
-        else:
-            return False
+    # @property
+    # def available(self):
+    #     """Return the availability of the sensor."""
+    #     if 'Status' in self._data:
+    #         return self._data['Status'] == UNAVAILABLE
+    #     else:
+    #         return False
 
     @property
     def device_state_attributes(self):
