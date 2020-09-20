@@ -81,13 +81,14 @@ class FlashforgePrinter(Entity):
         else:
             return UNAVAILABLE
 
-    # @property
-    # def available(self):
-    #     """Return the availability of the sensor."""
-    #     if 'Status' in self._data:
-    #         return self._data['Status'] == UNAVAILABLE
-    #     else:
-    #         return False
+    @property
+    def available(self):
+        """Return the availability of the sensor."""
+        return True
+        if 'Status' in self._data:
+            return self._data['Status'] == UNAVAILABLE
+        else:
+            return False
 
     @property
     def device_state_attributes(self):
@@ -113,11 +114,12 @@ class FlashforgePrinter(Entity):
                     data.update(parse_values(raw_data.decode()))
                 printer_socket.shutdown(socket.SHUT_RDWR)
                 printer_socket.close()
-        except:
+        except Exception as e:
             if raw_data == '':
-                data['error'] = 'Connection failed.'
+                data['raw data'] = ''
             else:
-                data['error'] = 'Raw data: ' + raw_data.decode()
+                data['raw data'] = raw_data.decode()
+            data['error'] = e
         self._data = data
 
     def parse_values(text):
