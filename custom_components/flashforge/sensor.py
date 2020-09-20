@@ -111,7 +111,7 @@ class FlashforgePrinter(Entity):
                     raw_data = printer_socket.recv(BUFFER_SIZE)
                     if self._debug:
                         data['Debug('+message+')'] = raw_data.decode()
-                    data.update(parse_values(raw_data.decode()))
+                    data.update(self.parse_values(raw_data.decode()))
                 printer_socket.shutdown(socket.SHUT_RDWR)
                 printer_socket.close()
         except Exception as e:
@@ -122,7 +122,8 @@ class FlashforgePrinter(Entity):
             data['error'] = str(e)
         self._data = data
 
-    def parse_values(self, text):
+    @staticmethod
+    def parse_values(text):
         lines = text.split('\r\n')
         values = {}
         for line in lines:
