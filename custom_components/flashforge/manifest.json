@@ -1,0 +1,7 @@
+{
+    "domain": "flashforge",
+    "name": "Flashforge API",
+    "dependencies": [],
+    "codeowners": ["davidlang42","01F0"],
+    "requirements": []
+  }
