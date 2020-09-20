@@ -6,6 +6,7 @@ from homeassistant.const import CONF_NAME, CONF_HOST, CONF_PORT
 from homeassistant.helpers.entity import Entity
 
 import socket
+from datetime import datetime
 
 REQUEST_CONTROL = '~M601 S1\r\n'
 REQUEST_INFO = '~M115\r\n'
@@ -99,7 +100,7 @@ class FlashforgePrinter(Entity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        data = {}
+        data = {'last_updated', str(datetime.now())}
         raw_data = ''
         try:
             printer_socket = socket.socket()
