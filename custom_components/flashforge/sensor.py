@@ -119,10 +119,10 @@ class FlashforgePrinter(Entity):
                 data['raw data'] = ''
             else:
                 data['raw data'] = raw_data.decode()
-            data['error'] = e
+            data['error'] = str(e)
         self._data = data
 
-    def parse_values(text):
+    def parse_values(self, text):
         lines = text.split('\r\n')
         values = {}
         for line in lines:
