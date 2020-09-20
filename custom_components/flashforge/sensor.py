@@ -1,7 +1,8 @@
 """Flashforge platform for sensor integration."""
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
-from homeassistant.components.sensor import SensorEntity, PLATFORM_SCHEMA
+from homeassistant.helpers.entity import Entity
+from homeassistant.components.sensor import PLATFORM_SCHEMA
 
 import socket
 import packets
@@ -50,7 +51,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     add_entities([FlashforgePrinter(sensor_name, printer_address, request_data)])
     return True
 
-class FlashforgePrinter(SensorEntity):
+class FlashforgePrinter(Entity):
     """Representation of a Flashforge Printer."""
 
     def __init__(self, sensor_name, printer_address, request_data):
