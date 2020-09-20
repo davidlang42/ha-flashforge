@@ -2,7 +2,7 @@
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
-from homeassistant.const import CONF_HOST, CONF_NAME
+from homeassistant.const import CONF_NAME, CONF_HOST, CONF_PORT
 from homeassistant.helpers.entity import Entity
 
 import socket
@@ -19,7 +19,6 @@ TIMEOUT_SECONDS = 5
 
 DOMAIN = "flashforge"
 
-CONF_PORT = "port"
 CONF_INCLUDE_INFO = "include_info"
 CONF_INCLUDE_HEAD = "include_head"
 CONF_INCLUDE_TEMP = "include_temp"
