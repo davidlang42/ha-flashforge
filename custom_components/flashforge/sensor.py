@@ -100,7 +100,7 @@ class FlashforgePrinter(Entity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        data = {'last_updated', str(datetime.now())}
+        data = {'last_updated': str(datetime.now())}
         raw_data = ''
         try:
             printer_socket = socket.socket()
