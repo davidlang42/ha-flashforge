@@ -19,6 +19,7 @@ TIMEOUT_SECONDS = 5
 
 DOMAIN = "flashforge"
 
+CONF_DEBUG = "debug"
 CONF_INCLUDE_INFO = "include_info"
 CONF_INCLUDE_HEAD = "include_head"
 CONF_INCLUDE_TEMP = "include_temp"
@@ -33,7 +34,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_INCLUDE_INFO, default=True): cv.boolean,
     vol.Optional(CONF_INCLUDE_HEAD, default=True): cv.boolean,
     vol.Optional(CONF_INCLUDE_TEMP, default=True): cv.boolean,
-    vol.Optional(CONF_INCLUDE_PROGRESS, default=True): cv.boolean
+    vol.Optional(CONF_INCLUDE_PROGRESS, default=True): cv.boolean,
+    vol.Optional(CONF_DEBUG, default=False): cv.boolean
 })
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
@@ -50,19 +52,21 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         request_data.append(REQUEST_TEMP)
     if config.get(CONF_INCLUDE_PROGRESS):
         request_data.append(REQUEST_PROGRESS)
+    debug = config.get(CONF_DEBUG)
 
-    add_entities([FlashforgePrinter(sensor_name, printer_address, request_data)])
+    add_entities([FlashforgePrinter(sensor_name, printer_address, request_data, debug)])
     return True
 
 class FlashforgePrinter(Entity):
     """Representation of a Flashforge Printer."""
 
-    def __init__(self, sensor_name, printer_address, request_data):
+    def __init__(self, sensor_name, printer_address, request_data, debug):
         """Initialize the sensor."""
         self._data = {}
         self._name = sensor_name
         self._request = request_data
         self._printer = printer_address
+        self._debug = debug
 
     @property
     def name(self):
@@ -104,6 +108,8 @@ class FlashforgePrinter(Entity):
                 for message in self._request:
                     printer_socket.send(message.encode())
                     raw_data = printer_socket.recv(BUFFER_SIZE)
+                    if self._debug:
+                        data['Debug('+message+')'] = raw_data.decode()
                     data.update(parse_values(raw_data.decode()))
                 printer_socket.shutdown(socket.SHUT_RDWR)
                 printer_socket.close()
