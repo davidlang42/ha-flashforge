@@ -2,7 +2,7 @@
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
-from homeassistant.components.sensor import PLATFORM_SCHEMA
+from homeassistant.const import CONF_HOST
 
 import socket
 import packets
@@ -14,7 +14,6 @@ TIMEOUT_SECONDS = 5
 DOMAIN = "flashforge"
 
 CONF_NAME = "name"
-CONF_HOST = "host"
 CONF_PORT = "port"
 CONF_INCLUDE_INFO = "include_info"
 CONF_INCLUDE_HEAD = "include_head"
@@ -23,7 +22,7 @@ CONF_INCLUDE_PROGRESS = "include_progress"
 
 UNAVAILABLE = 'UNAVAILABLE' # Status used when error connecting to printer
 
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
+PLATFORM_SCHEMA = {
     vol.Required(CONF_NAME): cv.string,
     vol.Required(CONF_HOST): cv.string,
     vol.Optional(CONF_PORT, default=8899): cv.port,
@@ -31,7 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_INCLUDE_HEAD, default=True): cv.boolean,
     vol.Optional(CONF_INCLUDE_TEMP, default=True): cv.boolean,
     vol.Optional(CONF_INCLUDE_PROGRESS, default=True): cv.boolean
-})
+}
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Setup the Flashforge platform."""
