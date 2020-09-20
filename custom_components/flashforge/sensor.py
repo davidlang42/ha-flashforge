@@ -94,15 +94,15 @@ class FlashforgePrinter(SensorEntity):
         raw_data = ''
         try:
             printer_socket = socket.socket()
-                with printer_socket:
-                    printer_socket.settimeout(TIMEOUT_SECONDS)
-                    printer_socket.connect((self._printer['ip'], self._printer['port']))
-                    for message in self._request:
-                        printer_socket.send(message.encode())
-                        raw_data = printer_socket.recv(BUFFER_SIZE)
-                        data.update(parse.parse_values(raw_data.decode()))
-                    printer_socket.shutdown(socket.SHUT_RDWR)
-                    printer_socket.close()
+            with printer_socket:
+                printer_socket.settimeout(TIMEOUT_SECONDS)
+                printer_socket.connect((self._printer['ip'], self._printer['port']))
+                for message in self._request:
+                    printer_socket.send(message.encode())
+                    raw_data = printer_socket.recv(BUFFER_SIZE)
+                    data.update(parse.parse_values(raw_data.decode()))
+                printer_socket.shutdown(socket.SHUT_RDWR)
+                printer_socket.close()
         except:
             if raw_data == '':
                 data['error'] = 'Connection failed.'
