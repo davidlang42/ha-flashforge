@@ -2,6 +2,7 @@ FlashForge API
 =======================
 
 This is an unofficial interpretation of the FlashForge API by 01F0 using a Flashforge Finder 3d printer.
+
 The api has been written into a simple HomeAssistant integration by davidlang42.
 
 Warning
@@ -35,4 +36,6 @@ So far it has been tested on:
 * Finder (by 01F0)
 * Adventurer (by davidlang42)
 
-If you have another flashforge model, try enabling debug mode in YAML config (as above) and send the state attributes to us to update the value parsing.
+If you have another flashforge model, let me know if it works so I can add it to the list.
+
+If values are missing, try enabling debug mode in YAML config (as above) and send the state attributes to me so I can update the value parsing.
