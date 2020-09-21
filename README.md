@@ -1,4 +1,4 @@
-FlashForge API
+Flashforge API
 =======================
 
 This is an unofficial interpretation of the FlashForge API by 01F0 using a Flashforge Finder 3d printer.
