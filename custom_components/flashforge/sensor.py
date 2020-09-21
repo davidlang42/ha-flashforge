@@ -8,6 +8,7 @@ from homeassistant.helpers.entity import Entity
 import socket
 from datetime import datetime
 
+# Request packets as reverse engineered by 01F0
 REQUEST_CONTROL = '~M601 S1\r\n'
 REQUEST_INFO = '~M115\r\n'
 REQUEST_HEAD_POSITION = '~M114\r\n'
@@ -26,7 +27,7 @@ CONF_INCLUDE_HEAD = "include_head"
 CONF_INCLUDE_TEMP = "include_temp"
 CONF_INCLUDE_PROGRESS = "include_progress"
 
-UNAVAILABLE = 'UNAVAILABLE' # Status used when error connecting to printer
+UNAVAILABLE = 'off' # Status used when unable to connect to printer
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_NAME): cv.string,
@@ -81,15 +82,6 @@ class FlashforgePrinter(Entity):
             return self._data['Status']
         else:
             return UNAVAILABLE
-
-    @property
-    def available(self):
-        """Return the availability of the sensor."""
-        return True
-        if 'Status' in self._data:
-            return self._data['Status'] == UNAVAILABLE
-        else:
-            return False
 
     @property
     def device_state_attributes(self):
