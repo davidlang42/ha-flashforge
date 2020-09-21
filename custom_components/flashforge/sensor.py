@@ -27,7 +27,8 @@ CONF_INCLUDE_HEAD = "include_head"
 CONF_INCLUDE_TEMP = "include_temp"
 CONF_INCLUDE_PROGRESS = "include_progress"
 
-UNAVAILABLE = 'off' # Status used when unable to connect to printer
+UNAVAILABLE_STATE = 'off' # Status used when unable to connect to printer
+STATUS_ATTRIBUTE = 'MachineStatus' # Attribute used for sensor state
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_NAME): cv.string,
@@ -78,10 +79,10 @@ class FlashforgePrinter(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        if 'Status' in self._data:
-            return self._data['Status']
+        if STATUS_ATTRIBUTE in self._data:
+            return self._data[STATUS_ATTRIBUTE]
         else:
-            return UNAVAILABLE
+            return UNAVAILABLE_STATE
 
     @property
     def device_state_attributes(self):
