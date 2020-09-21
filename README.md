@@ -30,7 +30,7 @@ sensor:
     debug: False # Optional, default False, if true it will include debug information in the state attributes
 ```
 
-Does it support other FlashForge models?
+Does it support other Flashforge models?
 =======================
 So far it has been tested on:
 * Finder (by 01F0)
