@@ -143,7 +143,7 @@ class FlashforgePrinter(Entity):
             del values['T0']
         if message == REQUEST_PROGRESS:
             for line in lines:
-                if line.startswith('SD printing byte')
+                if line.startswith('SD printing byte'):
                     progress = line[16:].split('/')
                     values['ByteProgress'] = progress[0]
                     values['ByteTotal'] = progress[1]
