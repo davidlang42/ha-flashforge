@@ -94,7 +94,7 @@ class FlashforgePrinter(Entity):
         This is the only method that should fetch new data for Home Assistant.
         """
         data = {'last_updated': str(datetime.now())}
-        raw_data = ''
+        raw_data = None
         try:
             printer_socket = socket.socket()
             with printer_socket:
@@ -109,11 +109,9 @@ class FlashforgePrinter(Entity):
                 printer_socket.shutdown(socket.SHUT_RDWR)
                 printer_socket.close()
         except Exception as e:
-            if raw_data == '':
-                data['raw data'] = ''
-            else:
-                data['raw data'] = raw_data.decode()
-            data['error'] = str(e)
+            if raw_data != None:
+                data['RawData'] = raw_data.decode()
+            data['Error'] = str(e)
         self._data = data
 
     @staticmethod
