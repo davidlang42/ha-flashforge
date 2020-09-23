@@ -135,9 +135,9 @@ class FlashforgePrinter(Entity):
             t0 = temps[0].split('/')
             b = temps[1].split('/')
             values['TempT0'] = t0[0].strip()
-            values['TempT0_target'] = t0[1].strip()
+            values['TempT0_Target'] = t0[1].strip()
             values['TempB'] = b[0].strip()
-            values['TempB_target'] = b[1].strip()
+            values['TempB_Target'] = b[1].strip()
             del values['T0']
         if message == REQUEST_PROGRESS:
             for line in lines:
