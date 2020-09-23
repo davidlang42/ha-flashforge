@@ -117,11 +117,39 @@ class FlashforgePrinter(Entity):
         self._data = data
 
     @staticmethod
-    def parse_values(text):
+    def parse_values(text,message):
+        # common value parsing
         lines = text.split('\r\n')
         values = {}
         for line in lines:
             pair = line.split(':',1)
             if len(pair) == 2:
                 values[pair[0]] = pair[1]
+        # special cases by message
+        if message == REQUEST_INFO and 'X' in values:
+            values['max size'] = 'X:'+values['X']
+            del values['X']
+        if message == REQUEST_HEAD_POSITION and 'X' in values:
+            values['head position'] = 'X:'+values['X']
+            del values['X']
+        if message == REQUEST_TEMP and 'T0' in values:
+            temps = values['T0'].split('B:')
+            t0 = temps[0].split('/')
+            b = temps[1].split('/')
+            values['TempT0'] = t0[0].strip()
+            values['TempT0_target'] = t0[1].strip()
+            values['TempB'] = b[0].strip()
+            values['TempB_target'] = b[1].strip()
+            del values['T0']
+        if message == REQUEST_PROGRESS:
+            for line in lines:
+                if line.startswith('SD printing byte')
+                    progress = line[16:].split('/')
+                    values['ByteProgress'] = progress[0]
+                    values['ByteTotal'] = progress[1]
+                    if progress[1] > 0:
+                        values['ProgressPercent'] = progress[0]/progress[1]*100
+                    else:
+                        values['ProgressPercent'] = 0
+        # finished
         return values
