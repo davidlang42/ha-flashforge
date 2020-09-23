@@ -110,8 +110,8 @@ class FlashforgePrinter(Entity):
                 printer_socket.close()
         except Exception as e:
             if raw_data != None:
-                data['raw data'] = raw_data.decode()
-            data['error'] = str(e)
+                data['RawData'] = raw_data.decode()
+            data['Error'] = str(e)
         self._data = data
 
     @staticmethod
@@ -125,19 +125,19 @@ class FlashforgePrinter(Entity):
                 values[pair[0]] = pair[1].strip()
         # special cases by message
         if message == REQUEST_INFO and 'X' in values:
-            values['max size'] = 'X:'+values['X']
+            values['MaxSize'] = 'X:'+values['X']
             del values['X']
         if message == REQUEST_HEAD_POSITION and 'X' in values:
-            values['head position'] = 'X:'+values['X']
+            values['HeadPosition'] = 'X:'+values['X']
             del values['X']
         if message == REQUEST_TEMP and 'T0' in values:
             temps = values['T0'].split('B:')
             t0 = temps[0].split('/')
             b = temps[1].split('/')
-            values['temp T0'] = t0[0].strip()
-            values['temp T0_target'] = t0[1].strip()
-            values['temp B'] = b[0].strip()
-            values['temp B_target'] = b[1].strip()
+            values['TempT0'] = t0[0].strip()
+            values['TempT0_target'] = t0[1].strip()
+            values['TempB'] = b[0].strip()
+            values['TempB_target'] = b[1].strip()
             del values['T0']
         if message == REQUEST_PROGRESS:
             for line in lines:
