@@ -110,8 +110,8 @@ class FlashforgePrinter(Entity):
                 printer_socket.close()
         except Exception as e:
             if raw_data != None:
-                data['RawData'] = raw_data.decode()
-            data['Error'] = str(e)
+                data['raw data'] = raw_data.decode()
+            data['error'] = str(e)
         self._data = data
 
     @staticmethod
@@ -122,7 +122,7 @@ class FlashforgePrinter(Entity):
         for line in lines:
             pair = line.split(':',1)
             if len(pair) == 2:
-                values[pair[0]] = pair[1]
+                values[pair[0]] = pair[1].strip()
         # special cases by message
         if message == REQUEST_INFO and 'X' in values:
             values['max size'] = 'X:'+values['X']
@@ -134,10 +134,10 @@ class FlashforgePrinter(Entity):
             temps = values['T0'].split('B:')
             t0 = temps[0].split('/')
             b = temps[1].split('/')
-            values['TempT0'] = t0[0].strip()
-            values['TempT0_target'] = t0[1].strip()
-            values['TempB'] = b[0].strip()
-            values['TempB_target'] = b[1].strip()
+            values['temp T0'] = t0[0].strip()
+            values['temp T0_target'] = t0[1].strip()
+            values['temp B'] = b[0].strip()
+            values['temp B_target'] = b[1].strip()
             del values['T0']
         if message == REQUEST_PROGRESS:
             for line in lines:
@@ -145,8 +145,8 @@ class FlashforgePrinter(Entity):
                     progress = line[16:].split('/')
                     values['ByteProgress'] = progress[0]
                     values['ByteTotal'] = progress[1]
-                    if progress[1] > 0:
-                        values['ProgressPercent'] = progress[0]/progress[1]*100
+                    if int(progress[1]) > 0:
+                        values['ProgressPercent'] = int(progress[0])/int(progress[1])*100
                     else:
                         values['ProgressPercent'] = 0
         # finished
