@@ -105,7 +105,7 @@ class FlashforgePrinter(Entity):
                     raw_data = printer_socket.recv(BUFFER_SIZE)
                     if self._debug:
                         data['Debug('+message+')'] = raw_data.decode()
-                    data.update(self.parse_values(raw_data.decode()))
+                    data.update(self.parse_values(raw_data.decode(),message))
                 printer_socket.shutdown(socket.SHUT_RDWR)
                 printer_socket.close()
         except Exception as e:
