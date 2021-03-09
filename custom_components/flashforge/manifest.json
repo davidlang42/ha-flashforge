@@ -1,7 +1,8 @@
 {
-    "domain": "flashforge",
-    "name": "Flashforge API",
-    "dependencies": [],
-    "codeowners": ["davidlang42","01F0"],
-    "requirements": []
-  }
+  "domain": "flashforge",
+  "name": "Flashforge API",
+  "dependencies": [],
+  "codeowners": ["davidlang42","01F0"],
+  "requirements": [],
+  "version": "2021.3.1"
+}
